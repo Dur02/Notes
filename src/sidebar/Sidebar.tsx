@@ -68,35 +68,39 @@ const Siderbar: React.FC<SiderbarProps> = ({
   }, []);
 
   const jsonToCsv = useCallback((jsonData: NotesType[]) => {
-    // Extract all keys from JSON data
-    const headers: string[] = Object.keys(jsonData[0]);
+    if (jsonData.length > 0) {
+      // Extract all keys from JSON data
+      const headers: string[] = Object.keys(jsonData[0]);
 
-    // Convert keys array to CSV format header
-    const csvHeader = headers.join(",");
+      // Convert keys array to CSV format header
+      const csvHeader = headers.join(",");
 
-    // Convert JSON data to CSV format content
-    const csvContent = jsonData
-      .map((row: NotesType) => {
-        return headers
-          .map((fieldName: any) => {
-            // For each row, get the corresponding value based on the key
-            // and escape the value appropriately
-            let fieldValue = row[fieldName as keyof NotesType];
-            if (typeof fieldValue === "string") {
-              // If the value contains a comma, wrap the entire field in double quotes
-              if (fieldValue.includes(",")) {
-                fieldValue = `"${fieldValue}"`;
+      // Convert JSON data to CSV format content
+      const csvContent = jsonData
+        .map((row: NotesType) => {
+          return headers
+            .map((fieldName: any) => {
+              // For each row, get the corresponding value based on the key
+              // and escape the value appropriately
+              let fieldValue = row[fieldName as keyof NotesType];
+              if (typeof fieldValue === "string") {
+                // If the value contains a comma, wrap the entire field in double quotes
+                if (fieldValue.includes(",")) {
+                  fieldValue = `"${fieldValue}"`;
+                }
               }
-            }
-            return fieldValue;
-          })
-          .join(",");
-      })
-      .join("\n");
+              return fieldValue;
+            })
+            .join(",");
+        })
+        .join("\n");
 
-    const csvString = `\uFEFF${csvHeader}\n${csvContent}`;
+      const csvString = `\uFEFF${csvHeader}\n${csvContent}`;
 
-    return csvString;
+      return csvString;
+    }
+
+    return ''
   }, []);
 
   const jsonToXml = useCallback(
@@ -134,12 +138,12 @@ const Siderbar: React.FC<SiderbarProps> = ({
       const fileType = file.type;
 
       if (fileType === "text/xml") {
-        // 处理 XML 文件
+        // process XML file
         const notes = parseXmlToNotes(contents as string);
         NotesAPI.multipleUpdateNote(notes);
         refreshNotes();
       } else if (fileType === "text/csv") {
-        // 处理 CSV 文件
+        // process CSV file
         const notes = parseCsvToNotes(contents as string);
         NotesAPI.multipleUpdateNote(notes);
         refreshNotes();
@@ -212,13 +216,15 @@ const Siderbar: React.FC<SiderbarProps> = ({
           onChange={(event) => handleFileUpload(event)}
         />
       </button>
-      <button
-        className={styles.notes__add}
-        type="button"
-        onClick={() => downloadCsvFromJson(notes)}
-      >
-        导出
-      </button>
+      {notes.length > 0 && (
+        <button
+          className={styles.notes__add}
+          type="button"
+          onClick={() => downloadCsvFromJson(notes)}
+        >
+          导出
+        </button>
+      )}
       <div className={styles.notes__list} ref={scrollRef}>
         {notes.map((item) => (
           <div

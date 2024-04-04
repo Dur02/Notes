@@ -34,13 +34,14 @@
 
 .notes__list_item {
   cursor: pointer;
-  border: 5px dotted;
+  border: 2px solid #dddddd;
   margin: 15px;
   border-radius: 10px;
 }
 
 .notes__list_item__selected {
   background: #eeeeee;
+  box-shadow: inset 0 0 0px rgba(50, 50, 50, 0.3);
   border-radius: 7px;
   font-weight: bold;
   border-radius: 10px;

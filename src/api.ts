@@ -36,7 +36,17 @@ export default class NotesAPI {
 
   static multipleUpdateNote(noteToSave: NotesType[]) {
     const notes = JSON.parse(localStorage.getItem("notesapp-notes") || "[]");
-    const newNotes = [...notes, ...noteToSave];
+    // filter the data have same id from final data
+    // what if the array have multiple same id but different body or title?
+    const newNotes = Array.from(
+      new Set([...notes, ...noteToSave].map((item) => item.id))
+    )
+      .map((id) => {
+        return [...notes, ...noteToSave].find((item) => item.id === id);
+      })
+      .sort((a: NotesType, b: NotesType) => {
+        return new Date(a.updated) > new Date(b.updated) ? -1 : 1;
+      });
     localStorage.setItem("notesapp-notes", JSON.stringify(newNotes));
   }
 }
