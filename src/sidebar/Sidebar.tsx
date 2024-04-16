@@ -67,7 +67,7 @@ const Siderbar: React.FC<SiderbarProps> = ({
     URL.revokeObjectURL(url1);
   }, []);
 
-  const jsonToCsv = useCallback((jsonData: NotesType[]) => {
+  const jsonToCsv = (jsonData: NotesType[]) => {
     if (jsonData.length > 0) {
       // Extract all keys from JSON data
       const headers: string[] = Object.keys(jsonData[0]);
@@ -100,28 +100,25 @@ const Siderbar: React.FC<SiderbarProps> = ({
       return csvString;
     }
 
-    return ''
-  }, []);
+    return "";
+  };
 
-  const jsonToXml = useCallback(
-    (notes: NotesType[], rootName: string = "root"): string => {
-      let xml = `<${rootName}>`;
+  const jsonToXml = (notes: NotesType[], rootName: string = "root"): string => {
+    let xml = `<${rootName}>`;
 
-      notes.forEach((note, index) => {
-        xml += `<note index="${index}">`;
-        xml += `<id>${note.id}</id>`;
-        xml += `<title>${note.title}</title>`;
-        xml += `<body>${note.body}</body>`;
-        xml += `<updated>${note.updated}</updated>`;
-        xml += `</note>`;
-      });
+    notes.forEach((note, index) => {
+      xml += `<note index="${index}">`;
+      xml += `<id>${note.id}</id>`;
+      xml += `<title>${note.title}</title>`;
+      xml += `<body>${note.body}</body>`;
+      xml += `<updated>${note.updated}</updated>`;
+      xml += `</note>`;
+    });
 
-      xml += `</${rootName}>`;
+    xml += `</${rootName}>`;
 
-      return xml;
-    },
-    []
-  );
+    return xml;
+  };
 
   const handleOpenupload = useCallback(() => {
     if (uploadRef.current) {
@@ -155,7 +152,7 @@ const Siderbar: React.FC<SiderbarProps> = ({
     reader.readAsText(file);
   };
 
-  const parseXmlToNotes = useCallback((xmlString: string): NotesType[] => {
+  const parseXmlToNotes = (xmlString: string): NotesType[] => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, "text/xml");
     const notes: NotesType[] = [];
@@ -171,9 +168,9 @@ const Siderbar: React.FC<SiderbarProps> = ({
     }
 
     return notes;
-  }, []);
+  };
 
-  const parseCsvToNotes = useCallback((csvString: string): NotesType[] => {
+  const parseCsvToNotes = (csvString: string): NotesType[] => {
     const lines = csvString.split("\n");
     const notes: NotesType[] = [];
 
@@ -189,7 +186,7 @@ const Siderbar: React.FC<SiderbarProps> = ({
     }
 
     return notes;
-  }, []);
+  };
 
   return (
     <div className={styles.notes__sidebar}>

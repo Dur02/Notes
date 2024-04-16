@@ -22,7 +22,7 @@ const App: React.FC<{}> = () => {
     }
   }, []);
 
-  const scrollToTop = useCallback(() => {
+  const scrollToTop = () => {
     const scrollToTopAnimation = () => {
       if (scrollRef.current) {
         const currentScrollTop = scrollRef.current.scrollTop;
@@ -37,7 +37,7 @@ const App: React.FC<{}> = () => {
     };
 
     scrollToTopAnimation();
-  }, [scrollRef]);
+  };
 
   const onNoteSelect = useCallback(
     (noteId: number) => {

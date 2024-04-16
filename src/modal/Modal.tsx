@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./Modal.module.css";
 import type { OperateType } from "../types/Notes";
 
@@ -19,13 +19,13 @@ const Modal: React.FC<ModalProps> = ({
   width,
   height,
 }) => {
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onClose();
-  };
+  }, [onClose]);
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     onConfirm();
-  };
+  }, [onConfirm]);
 
   return (
     isOpen && (
