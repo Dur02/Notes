@@ -13,8 +13,6 @@ interface SiderbarProps {
   setOperateData: (operateData: OperateDataType) => void;
   onNoteSelect: (noteId: number) => void;
   onNoteAdd: () => void;
-  onNoteEdit: (title: string, body: string) => void;
-  onNoteDelete: (noteId: number) => void;
   refreshNotes: () => void;
 }
 

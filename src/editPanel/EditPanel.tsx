@@ -4,8 +4,6 @@ import type { NotesType, OperateDataType, OperateType } from "../types/Notes";
 
 interface EditPanelProps {
   activeNote: NotesType | null;
-  setActiveNote: (note: NotesType) => void;
-  onNoteEdit: (title: string, body: string) => void;
   setIsOpen: (isOpen: boolean) => void;
   setOperate: (operate: OperateType) => void;
   setOperateData: (operateData: OperateDataType) => void;

@@ -105,14 +105,10 @@ const App: React.FC<{}> = () => {
         setOperateData={setOperateData}
         onNoteSelect={onNoteSelect}
         onNoteAdd={onNoteAdd}
-        onNoteEdit={onNoteEdit}
-        onNoteDelete={onNoteDelete}
         refreshNotes={refreshNotes}
       />
       <EditPanel
         activeNote={activeNote}
-        setActiveNote={setActiveNote}
-        onNoteEdit={onNoteEdit}
         setIsOpen={setIsOpen}
         setOperate={setOperate}
         setOperateData={setOperateData}
